@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HELLO WORLD — Synthwave</title>
+  <meta name="description" content="Un site statique d'une page, hommage au synthwave : soleil néon, grille infinie et Hello World.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="sun-halo"></div>
+    <div class="sun"></div>
+    <div class="horizon"></div>
+    <div class="grid"></div>
+  </div>
+
+  <main class="content">
+    <p class="eyebrow">// static site · no build step</p>
+    <h1 class="title" data-text="HELLO WORLD">HELLO WORLD</h1>
+    <p class="subtitle">Néons, grille infinie et rétro-futur.</p>
+    <nav class="links" aria-label="Liens">
+      <a href="https://developer.mozilla.org/fr/docs/Web/HTML">HTML</a>
+      <a href="https://developer.mozilla.org/fr/docs/Web/CSS">CSS</a>
+      <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript">JS</a>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year">2026</span> — synthwave hello world</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

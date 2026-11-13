@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Synthwave sun">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14062e"/>
+      <stop offset="1" stop-color="#2a0b45"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff6b0"/>
+      <stop offset="0.45" stop-color="#ffb347"/>
+      <stop offset="0.8" stop-color="#ff2e97"/>
+      <stop offset="1" stop-color="#b01e9c"/>
+    </linearGradient>
+    <clipPath id="disc">
+      <circle cx="32" cy="30" r="18"/>
+    </clipPath>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#sky)"/>
+  <circle cx="32" cy="30" r="18" fill="url(#sun)"/>
+  <g clip-path="url(#disc)" fill="#14062e">
+    <rect x="10" y="36" width="44" height="2.5"/>
+    <rect x="10" y="41" width="44" height="3"/>
+    <rect x="10" y="46.5" width="44" height="3.5"/>
+    <rect x="10" y="52.5" width="44" height="4"/>
+  </g>
+  <g stroke="#21e6ff" stroke-width="1" opacity="0.8">
+    <path d="M4 60h56"/>
+    <path d="M8 56h48"/>
+    <path d="M14 52h36"/>
+  </g>
+</svg>
