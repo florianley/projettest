@@ -1,0 +1,332 @@
+:root {
+  --bg-deep: #06020f;
+  --bg-mid: #14062e;
+  --bg-low: #26093f;
+  --pink: #ff2e97;
+  --magenta: #ff00c8;
+  --cyan: #21e6ff;
+  --purple: #7b2ff7;
+  --ink: #f4e9ff;
+  --stripe: #1b0733;
+
+  /* Ligne d'horizon : centre du soleil et début de la grille */
+  --horizon: 62%;
+  --sun-size: min(40vmin, 320px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: "Avenir Next", "Trebuchet MS", system-ui, sans-serif;
+  background:
+    radial-gradient(120% 60% at 50% 64%, rgba(255, 46, 151, 0.22) 0%, rgba(255, 46, 151, 0) 55%),
+    radial-gradient(90% 55% at 50% 72%, rgba(123, 47, 247, 0.5) 0%, rgba(123, 47, 247, 0) 65%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 42%, var(--bg-low) 62%, #100322 100%);
+}
+
+/* ---------- Décor ---------- */
+
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  perspective: 900px;
+  perspective-origin: 50% var(--horizon);
+}
+
+.stars {
+  position: absolute;
+  inset: 0 0 44% 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, rgba(255, 255, 255, 0.85) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 28% 12%, rgba(33, 230, 255, 0.8) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 46% 30%, rgba(255, 255, 255, 0.65) 50%, transparent 51%),
+    radial-gradient(2px 2px at 63% 16%, rgba(255, 46, 151, 0.85) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 78% 28%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 90% 10%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 36% 44%, rgba(255, 255, 255, 0.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 70% 40%, rgba(33, 230, 255, 0.45) 50%, transparent 51%);
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+.sun-halo {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--horizon) - var(--sun-size) / 2);
+  width: calc(var(--sun-size) * 2);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 90, 160, 0.45) 0%,
+    rgba(190, 50, 220, 0.28) 42%,
+    rgba(120, 40, 200, 0) 70%
+  );
+  filter: blur(10px);
+}
+
+/* Le soleil plonge derrière l'horizon : on ne garde que la partie visible */
+.sun {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--horizon) - var(--sun-size) * 0.72);
+  width: var(--sun-size);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff5b8 0%, #ffd166 28%, #ff9040 52%, #ff2e97 78%, #a81c96 100%);
+  clip-path: inset(0 0 28% 0);
+}
+
+/* Fentes horizontales typiques du coucher de soleil synthwave */
+.sun::after {
+  content: "";
+  position: absolute;
+  inset: 47% 0 0 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 7px,
+    var(--stripe) 7px 17px
+  );
+}
+
+.horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--horizon);
+  height: 2px;
+  background: linear-gradient(90deg, transparent 2%, var(--cyan), var(--pink) 55%, transparent 98%);
+  box-shadow:
+    0 0 14px rgba(33, 230, 255, 0.7),
+    0 0 40px rgba(255, 46, 151, 0.55);
+}
+
+.grid {
+  position: absolute;
+  left: 50%;
+  top: var(--horizon);
+  width: 420vmax;
+  height: 80vh;
+  translate: -50% 0;
+  transform: rotateX(76deg);
+  transform-origin: 50% 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 46, 151, 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(33, 230, 255, 0.55) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: center 0;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 70%, #000 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 70%, #000 100%);
+  animation: grid-scroll 2.6s linear infinite;
+}
+
+/* ---------- Contenu ---------- */
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 74rem;
+  margin: 4vh auto 0;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 1.1rem;
+  font-size: clamp(0.62rem, 1.5vw, 0.78rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(33, 230, 255, 0.85);
+}
+
+.title {
+  position: relative;
+  margin: 0;
+  font-family: "Futura", "Avenir Next Condensed", "Trebuchet MS", system-ui, sans-serif;
+  font-size: clamp(2.1rem, 11vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe6fb 26%, var(--pink) 62%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(255, 46, 151, 0.4)) drop-shadow(0 0 40px rgba(123, 47, 247, 0.5));
+  animation: flicker 7s infinite;
+}
+
+/* Aberration chromatique */
+.title::before,
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.title::before {
+  color: var(--cyan);
+  translate: -0.014em 0;
+}
+
+.title::after {
+  color: var(--magenta);
+  translate: 0.014em 0;
+}
+
+.subtitle {
+  margin: 1.3rem 0 0;
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+  letter-spacing: 0.16em;
+  color: #d8c6ff;
+  text-shadow: 0 0 18px rgba(123, 47, 247, 0.7);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-top: 2.2rem;
+}
+
+.links a {
+  padding: 0.55rem 1.45rem;
+  border: 1px solid rgba(33, 230, 255, 0.6);
+  border-radius: 999px;
+  color: var(--cyan);
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(33, 230, 255, 0.7);
+  box-shadow: inset 0 0 18px rgba(33, 230, 255, 0.1), 0 0 12px rgba(33, 230, 255, 0.15);
+  transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, translate 0.25s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: #fff;
+  border-color: var(--pink);
+  box-shadow: inset 0 0 22px rgba(255, 46, 151, 0.3), 0 0 24px rgba(255, 46, 151, 0.5);
+  translate: 0 -2px;
+  outline: none;
+}
+
+.footer {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 1.5rem 1rem 1.25rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(244, 233, 255, 0.4);
+  text-align: center;
+}
+
+/* ---------- Effets plein écran ---------- */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px),
+    radial-gradient(125% 95% at 50% 45%, transparent 58%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes grid-scroll {
+  from { background-position: center 0; }
+  to { background-position: center 80px; }
+}
+
+@keyframes twinkle {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+@keyframes flicker {
+  0%, 92%, 100% { opacity: 1; }
+  93% { opacity: 0.75; }
+  94% { opacity: 1; }
+  96% { opacity: 0.88; }
+  97% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-height: 640px) {
+  .content {
+    margin-top: 3vh;
+  }
+
+  :root {
+    --horizon: 64%;
+  }
+}
+
+@media (max-width: 420px) {
+  .eyebrow {
+    letter-spacing: 0.28em;
+  }
+
+  .footer {
+    letter-spacing: 0.18em;
+  }
+}
+
+.v1-back {
+  display: block;
+  margin-top: 0.65rem;
+}
+
+.v1-back a {
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  transition: color 0.25s ease;
+}
+
+.v1-back a:hover,
+.v1-back a:focus-visible {
+  color: #fff;
+}

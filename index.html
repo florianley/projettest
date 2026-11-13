@@ -1,39 +1,219 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="sunset">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HELLO WORLD — Synthwave</title>
-  <meta name="description" content="Un site statique d'une page, hommage au synthwave : soleil néon, grille infinie et Hello World.">
+  <meta name="color-scheme" content="dark">
+  <title>HELLO WORLD — Synthwave v2</title>
+  <meta name="description" content="Version 2 du site statique synthwave : soleil néon, grille infinie, terminal animé et thème Matrix. Zéro build, zéro dépendance.">
+  <meta name="theme-color" content="#0b0420" id="theme-color">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HELLO WORLD — Synthwave v2">
+  <meta property="og:description" content="Soleil néon, grille infinie, terminal animé et thème Matrix. Un site statique, zéro build, zéro dépendance.">
+  <meta property="og:locale" content="fr_FR">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <noscript>
+    <style>.theme-toggle { display: none; }</style>
+  </noscript>
+  <script>
+    /* Applique le thème sauvegardé avant le premier rendu (évite le flash). */
+    (function () {
+      var theme = "sunset";
+      try {
+        var saved = localStorage.getItem("sw-theme");
+        if (saved === "matrix" || saved === "sunset") theme = saved;
+      } catch (error) { /* stockage indisponible : on garde le thème par défaut */ }
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.add("js");
+    })();
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
   <div class="scene" aria-hidden="true">
-    <div class="stars"></div>
+    <div class="scene__stars"></div>
+    <div class="scene__aurora"></div>
     <div class="sun-halo"></div>
     <div class="sun"></div>
     <div class="horizon"></div>
     <div class="grid"></div>
   </div>
 
-  <main class="content">
-    <p class="eyebrow">// static site · no build step</p>
-    <h1 class="title" data-text="HELLO WORLD">HELLO WORLD</h1>
-    <p class="subtitle">Néons, grille infinie et rétro-futur.</p>
-    <nav class="links" aria-label="Liens">
-      <a href="https://developer.mozilla.org/fr/docs/Web/HTML">HTML</a>
-      <a href="https://developer.mozilla.org/fr/docs/Web/CSS">CSS</a>
-      <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript">JS</a>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#top" aria-label="NEON SYS, retour en haut">
+      NEON<span class="brand__slash">//</span>SYS
+    </a>
+
+    <nav class="topnav" aria-label="Navigation principale">
+      <a href="#system">Système</a>
+      <a href="#terminal">Terminal</a>
+      <a href="#specs">Specs</a>
     </nav>
+
+    <div class="topbar__actions">
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__dot" aria-hidden="true"></span>
+        <span class="theme-toggle__label">Sunset</span>
+      </button>
+      <a class="ghost-btn" href="v1/index.html" aria-label="Voir la version 1" title="Voir la version 1">v1</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <p class="eyebrow reveal">// static site · v2 · zero build</p>
+      <h1 class="title reveal" id="hero-title" data-text="HELLO WORLD">HELLO WORLD</h1>
+      <p class="subtitle reveal">Néons, grille infinie et rétro-futur — édition 2.0.</p>
+
+      <div class="hero__actions reveal">
+        <a class="btn btn--primary" href="#terminal">Lancer la démo</a>
+        <a class="btn" href="#system">Explorer</a>
+      </div>
+
+      <ul class="chips reveal" aria-label="Points clés">
+        <li>0 dépendance</li>
+        <li>0 build</li>
+        <li>0 tracker</li>
+      </ul>
+    </section>
+
+    <div class="page">
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <div class="marquee__group">
+            <span>Hello World</span><span class="marquee__outline">Synthwave</span><span>Neon</span><span class="marquee__outline">V2</span><span>Retro-futur</span><span class="marquee__outline">No build</span>
+          </div>
+          <div class="marquee__group">
+            <span>Hello World</span><span class="marquee__outline">Synthwave</span><span>Neon</span><span class="marquee__outline">V2</span><span>Retro-futur</span><span class="marquee__outline">No build</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" id="system" aria-labelledby="system-title">
+        <header class="section__head reveal">
+          <p class="eyebrow">01 — Système</p>
+          <h2 id="system-title">Un site, trois fichiers.</h2>
+          <p class="lead">
+            La v2 garde la promesse de la v1 : du HTML, du CSS et un peu de JavaScript,
+            servis tels quels. Aucun gestionnaire de paquets, aucun pipeline.
+          </p>
+        </header>
+
+        <div class="cards">
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/>
+              </svg>
+            </span>
+            <h3>Zéro build</h3>
+            <p>Ouvrez <code>index.html</code> : c'est déjà en production. Pas d'étape de compilation, pas de sortie de build à maintenir.</p>
+          </article>
+
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+              </svg>
+            </span>
+            <h3>Zéro dépendance</h3>
+            <p>Aucun CDN, aucune police distante, aucun tracker. Le réseau n'est sollicité que pour les fichiers du site.</p>
+          </article>
+
+          <article class="card reveal">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.8 20 7v10l-8 4.2L4 17V7l8-4.2Z"/>
+                <path d="M4.3 7.2 12 11l7.7-3.8M12 11v10.2"/>
+              </svg>
+            </span>
+            <h3>100 % statique</h3>
+            <p>Compatible GitHub Pages, Netlify, Cloudflare Pages ou n'importe quel serveur de fichiers, sans configuration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="terminal" aria-labelledby="terminal-title">
+        <div class="split">
+          <header class="section__head reveal">
+            <p class="eyebrow">02 — Terminal</p>
+            <h2 id="terminal-title">Une démo qui se tape toute seule.</h2>
+            <p class="lead">
+              Le seul JavaScript ajouté en v2 pilote le thème, les révélations au scroll
+              et cette petite session de terminal. Rien de plus.
+            </p>
+            <ul class="checks">
+              <li>Thème Sunset / Matrix mémorisé en local</li>
+              <li>Animations désactivées avec <code>prefers-reduced-motion</code></li>
+              <li>Navigation clavier et lien d'évitement</li>
+            </ul>
+          </header>
+
+          <p class="sr-only">
+            Démonstration : la commande <code>npm run hello</code> affiche <strong>HELLO WORLD</strong>,
+            prête en 0,00 s, sans build ni dépendance.
+          </p>
+
+          <div class="terminal reveal" aria-hidden="true">
+            <div class="terminal__bar">
+              <span class="terminal__lights"><i></i><i></i><i></i></span>
+              <span class="terminal__title">hello@synthwave: ~</span>
+            </div>
+            <div class="terminal__body" id="terminal-output">
+              <noscript>
+                <pre>$ npm run hello
+&gt; synthwave@2.0.0 hello
+&gt; echo "HELLO WORLD"
+HELLO WORLD
+✓ ready in 0.00s — zero build, zero deps</pre>
+              </noscript>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--specs" id="specs" aria-labelledby="specs-title">
+        <header class="section__head section__head--center reveal">
+          <p class="eyebrow">03 — Specs</p>
+          <h2 id="specs-title">Petit par choix, soigné par principe.</h2>
+        </header>
+
+        <dl class="stats reveal">
+          <div class="stat">
+            <dt>Fichiers</dt>
+            <dd>3</dd>
+          </div>
+          <div class="stat">
+            <dt>Dépendances</dt>
+            <dd>0</dd>
+          </div>
+          <div class="stat">
+            <dt>Thèmes</dt>
+            <dd>2</dd>
+          </div>
+          <div class="stat">
+            <dt>Néons</dt>
+            <dd>∞</dd>
+          </div>
+        </dl>
+
+        <div class="specs__cta reveal">
+          <p>Envie de comparer ? La version d'origine reste accessible.</p>
+          <a class="btn" href="v1/index.html">Ouvrir la v1</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
-    <span>© <span id="year">2026</span> — synthwave hello world</span>
+    <p>© <span id="year">2026</span> — synthwave hello world · v2</p>
+    <a href="v1/index.html">Revoir la v1</a>
   </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <script src="app.js" defer></script>
 </body>
 </html>
